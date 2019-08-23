@@ -1,0 +1,4 @@
+- hosts: app
+  become: yes
+  roles:
+    - common.users

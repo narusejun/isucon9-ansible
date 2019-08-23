@@ -1,0 +1,22 @@
+- name: make wheel group
+  group:
+    name: wheel
+
+- name: make wheel sudoer
+  lineinfile:
+    path: /etc/sudoers
+    regexp: "^%wheel\\s"
+    line: "%wheel ALL=(ALL) NOPASSWD: ALL"
+
+- name: add users
+  user:
+    name: "{{ item }}"
+    append: yes
+    groups: wheel
+  loop: "{{ users }}"
+
+- name: add ssh key
+  authorized_key:
+    user: "{{ item }}"
+    key: https://github.com/{{ item }}.keys
+  loop: "{{ users }}"
