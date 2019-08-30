@@ -10,3 +10,6 @@
     - name: util.netdata
       tags:
         - util.netdata
+    - name: util.notify_slack
+      tags:
+        - util.notify_slack

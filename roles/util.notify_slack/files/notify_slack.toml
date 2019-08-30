@@ -1,0 +1,7 @@
+[slack]
+url = "https://hooks.slack.com/services/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"
+token = "xoxb-732880978212-732585035315-Ch5Tp482SyN83Ik3jWhQGTaC"
+channel = "#stdout"
+username = "kiritan"
+icon_emoji = ":knife:"
+interval = "1s"
