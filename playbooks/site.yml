@@ -7,6 +7,9 @@
     - name: app.golang
       tags:
         - app.golang
+    - name: util.kataribe
+      tags:
+        - util.kataribe
     - name: util.netdata
       tags:
         - util.netdata

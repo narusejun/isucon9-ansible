@@ -1,0 +1,38 @@
+- name: install unzip
+  apt:
+    name: unzip
+
+- name: download kataribe
+  get_url:
+    url: https://github.com/matsuu/kataribe/releases/download/v0.3.3/linux_amd64.zip
+    dest: /tmp/kataribe.zip
+
+- name: check kataribe
+  stat:
+    path: /usr/local/bin/kataribe
+  register: kataribe
+
+- name: install kataribe
+  block:
+    - unarchive:
+        remote_src: yes
+        src: /tmp/kataribe.zip
+        dest: /usr/local/bin
+    - file:
+        path: /usr/local/bin/{{ item }}
+        state: absent
+      loop:
+        - LICENSE
+        - README.md
+        - kataribe.toml
+  when: not kataribe.stat.exists
+
+- name: put configuration
+  copy:
+    src: kataribe.toml
+    dest: /etc/kataribe.toml
+
+- name: put command
+  copy:
+    src: 99-isucon-kataribe.sh
+    dest: /etc/profile.d/99-isucon-kataribe.sh
