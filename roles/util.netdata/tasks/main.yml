@@ -1,0 +1,14 @@
+- name: download installation script
+  get_url:
+    url: https://my-netdata.io/kickstart-static64.sh
+    dest: /tmp/netdata.sh
+    mode: 0755
+
+- name: check netdata
+  stat:
+    path: /opt/netdata
+  register: netdata
+
+- name: install netdata
+  shell: yes | /tmp/netdata.sh
+  when: not netdata.stat.exists

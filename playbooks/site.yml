@@ -7,3 +7,6 @@
     - name: app.golang
       tags:
         - app.golang
+    - name: util.netdata
+      tags:
+        - util.netdata
