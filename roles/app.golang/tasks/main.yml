@@ -7,7 +7,7 @@
   unarchive:
     remote_src: yes
     src: /tmp/go.tar.gz
-    dest:  /opt
+    dest: /opt
 
 - name: set path
   copy:
