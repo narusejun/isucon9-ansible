@@ -1,4 +1,9 @@
 - hosts: app
   become: yes
   roles:
-    - common.users
+    - name: common.users
+      tags:
+        - common.users
+    - name: app.golang
+      tags:
+        - app.golang

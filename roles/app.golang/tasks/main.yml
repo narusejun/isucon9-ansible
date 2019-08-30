@@ -1,0 +1,15 @@
+- name: download go
+  get_url:
+    url: https://dl.google.com/go/go1.12.9.linux-amd64.tar.gz
+    dest: /tmp/go.tar.gz
+
+- name: install go
+  unarchive:
+    remote_src: yes
+    src: /tmp/go.tar.gz
+    dest:  /opt
+
+- name: set path
+  copy:
+    dest: /etc/profile.d/99-isucon-golang.sh
+    content: export PATH=/opt/go/bin:$PATH
