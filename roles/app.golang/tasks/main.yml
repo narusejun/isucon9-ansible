@@ -11,5 +11,5 @@
 
 - name: set path
   copy:
+    src: 99-isucon-golang.sh
     dest: /etc/profile.d/99-isucon-golang.sh
-    content: export PATH=/opt/go/bin:$PATH
