@@ -5,6 +5,6 @@
     dest: /usr/local/bin
 
 - name: put configuration
-  copy:
-    src: files/notify_slack.toml
+  template:
+    src: notify_slack.toml
     dest: /etc/notify_slack.toml
