@@ -1,7 +1,12 @@
+- name: download notify_slack
+  get_url:
+    url: https://github.com/catatsuy/notify_slack/releases/download/v0.4.1/notify_slack-linux-amd64.tar.gz
+    dest: /tmp/notify_slack.tar.gz
+
 - name: install notify_slack
   unarchive:
     remote_src: yes
-    src: https://github.com/catatsuy/notify_slack/releases/download/v0.4.1/notify_slack-linux-amd64.tar.gz
+    src: /tmp/notify_slack.tar.gz
     dest: /usr/local/bin
 
 - name: put configuration
