@@ -20,3 +20,10 @@
     user: "{{ item }}"
     key: https://github.com/{{ item }}.keys
   loop: "{{ users }}"
+
+- name: put commands
+  copy:
+    src: 99-isucon-{{ item }}.sh
+    dest: /etc/profile.d/99-isucon-{{ item }}.sh
+  loop:
+    - systemctl
