@@ -1,0 +1,32 @@
+- set_fact:
+    version: 4.9.0.1
+
+- name: create tmp dir
+  file:
+    path: ../tmp
+    state: directory
+
+- name: download phpMyAdmin
+  get_url:
+    url: https://files.phpmyadmin.net/phpMyAdmin/{{ version }}/phpMyAdmin-{{ version }}-all-languages.zip
+    dest: ../tmp/phpMyAdmin-{{ version }}-all-languages.zip
+
+- name: install phpMyAdmin
+  unarchive:
+    remote_src: yes
+    src: ../tmp/phpMyAdmin-{{ version }}-all-languages.zip
+    dest: ../tmp
+
+- name: put config file
+  template:
+    src: config.inc.php
+    dest: ../tmp/phpMyAdmin-{{ version }}-all-languages/config.inc.php
+
+- name: execute phpMyAdmin
+  shell: |
+    cd ../tmp/phpMyAdmin-{{ version }}-all-languages
+    pkill screen
+    screen -d -m php -S 0:10080
+    screen -d -m ssh -N -L 33061:0:3306 isu1.sysad.net
+    screen -d -m ssh -N -L 33062:0:3306 isu2.sysad.net
+    screen -d -m ssh -N -L 33063:0:3306 isu3.sysad.net

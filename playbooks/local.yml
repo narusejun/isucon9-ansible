@@ -1,0 +1,5 @@
+- hosts: local
+  roles:
+    - name: local.phpmyadmin
+      tags:
+        - local.phpmyadmin
