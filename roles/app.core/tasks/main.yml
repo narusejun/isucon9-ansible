@@ -17,3 +17,6 @@
         src: deploy_key.pem
         dest: ~/.ssh/id_rsa
         mode: 0600
+
+- import_tasks: deploy.yml
+  become_user: "{{ deploy_user }}"

@@ -1,0 +1,9 @@
+[Unit]
+Description=isucon9-app
+After=syslog.target network.target
+
+[Service]
+Type=simple
+Restart=always
+ExecStart=/home/{{ deploy_user }}/app/app
+EnvironmentFile=/home/{{ deploy_user }}/env
