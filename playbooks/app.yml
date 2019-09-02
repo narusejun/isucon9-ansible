@@ -10,9 +10,6 @@
     - name: app.core
       tags:
         - app.core
-    - name: util.kataribe
-      tags:
-        - util.kataribe
     - name: util.netdata
       tags:
         - util.netdata

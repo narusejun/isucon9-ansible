@@ -1,0 +1,9 @@
+- hosts: lb
+  become: yes
+  roles:
+    - name: common.users
+      tags:
+        - common.users
+    - name: util.kataribe
+      tags:
+        - util.kataribe
