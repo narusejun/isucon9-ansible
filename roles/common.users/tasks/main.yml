@@ -13,6 +13,7 @@
     name: "{{ item }}"
     append: yes
     groups: wheel
+    shell: /bin/bash
   loop: "{{ users }}"
 
 - name: add ssh key

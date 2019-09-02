@@ -3,6 +3,7 @@
     name: kiritan
     append: yes
     groups: wheel
+    shell: /bin/bash
 
 - name: add deploy key
   become_user: kiritan
