@@ -1,0 +1,22 @@
+- name: install mysql-server
+  apt:
+    name: mysql-server
+
+- name: put mysql conf
+  copy:
+    src: zz-isucon.cnf
+    dest: /etc/mysql/mysql.conf.d/zz-isucon.cnf
+
+- name: change systemd service unit for mysql
+  ini_file:
+    path: /lib/systemd/system/mysql.service
+    section: Service
+    option: LimitNOFILE
+    value: 65535
+
+- name: restart mysql
+  systemd:
+    name: mysql
+    enabled: yes
+    daemon_reload: yes
+    state: restarted

@@ -1,0 +1,9 @@
+- hosts: db
+  become: yes
+  roles:
+    - name: common.users
+      tags:
+        - common.users
+    - name: db.mysql
+      tags:
+        - db.mysql
