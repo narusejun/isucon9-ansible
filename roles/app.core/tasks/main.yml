@@ -1,0 +1,17 @@
+- name: add deploy user
+  user:
+    name: kiritan
+    append: yes
+    groups: wheel
+
+- name: add deploy key
+  become_user: kiritan
+  block:
+    - file:
+        path: /home/kiritan/.ssh
+        state: directory
+        mode: 0700
+    - copy:
+        src: deploy_key.pem
+        dest: /home/kiritan/.ssh/id_rsa
+        mode: 0600
