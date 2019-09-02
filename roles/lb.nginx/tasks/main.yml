@@ -25,8 +25,16 @@
     state: directory
     mode: 0777
 
-- name: reload nginx
-  service:
+- name: change systemd service unit for nginx
+  ini_file:
+    path: /lib/systemd/system/nginx.service
+    section: Service
+    option: LimitNOFILE
+    value: 65535
+
+- name: restart nginx
+  systemd:
     name: nginx
     enabled: yes
-    state: reloaded
+    daemon_reload: yes
+    state: restarted

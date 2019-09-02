@@ -7,3 +7,4 @@ Type=simple
 Restart=always
 ExecStart=/home/{{ deploy_user }}/app/app
 EnvironmentFile=/home/{{ deploy_user }}/env
+LimitNOFILE=65535
