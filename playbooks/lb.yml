@@ -4,6 +4,9 @@
     - name: common.users
       tags:
         - common.users
+    - name: lb.nginx
+      tags:
+        - lb.nginx
     - name: util.kataribe
       tags:
         - util.kataribe
