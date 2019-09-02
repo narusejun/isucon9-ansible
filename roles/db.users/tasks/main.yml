@@ -1,0 +1,5 @@
+- name: create mysql user
+  shell: |
+    mysql -e 'CREATE USER {{ item }}@localhost IDENTIFIED BY "{{ item }}"'
+    mysql -e 'GRANT ALL ON *.* TO {{ item }}@localhost'
+  loop: "{{ users + [deploy_user] }}"

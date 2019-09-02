@@ -7,3 +7,6 @@
     - name: db.mysql
       tags:
         - db.mysql
+    - name: db.users
+      tags:
+        - db.users
