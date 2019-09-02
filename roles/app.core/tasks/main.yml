@@ -1,19 +1,19 @@
 - name: add deploy user
   user:
-    name: kiritan
+    name: "{{ deploy_user }}"
     append: yes
     groups: wheel
     shell: /bin/bash
 
-- become_user: kiritan
+- become_user: "{{ deploy_user }}"
   block:
     - name: make directory for deploy key
       file:
-        path: /home/kiritan/.ssh
+        path: ~/.ssh
         state: directory
         mode: 0700
     - name: add deploy key
       copy:
         src: deploy_key.pem
-        dest: /home/kiritan/.ssh/id_rsa
+        dest: ~/.ssh/id_rsa
         mode: 0600
