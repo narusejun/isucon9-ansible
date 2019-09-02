@@ -12,13 +12,14 @@
     path: /usr/local/bin/kataribe
   register: kataribe
 
-- name: install kataribe
-  block:
-    - unarchive:
+- block:
+    - name: install kataribe
+      unarchive:
         remote_src: yes
         src: /tmp/kataribe.zip
         dest: /usr/local/bin
-    - file:
+    - name: delete unused files
+      file:
         path: /usr/local/bin/{{ item }}
         state: absent
       loop:

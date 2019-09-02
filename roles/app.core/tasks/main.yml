@@ -5,14 +5,15 @@
     groups: wheel
     shell: /bin/bash
 
-- name: add deploy key
-  become_user: kiritan
+- become_user: kiritan
   block:
-    - file:
+    - name: make directory for deploy key
+      file:
         path: /home/kiritan/.ssh
         state: directory
         mode: 0700
-    - copy:
+    - name: add deploy key
+      copy:
         src: deploy_key.pem
         dest: /home/kiritan/.ssh/id_rsa
         mode: 0600
