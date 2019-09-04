@@ -1,11 +1,11 @@
 - name: add deploy user
   user:
-    name: "{{ deploy_user }}"
+    name: "{{ bot_user }}"
     append: yes
     groups: wheel
     shell: /bin/bash
 
-- become_user: "{{ deploy_user }}"
+- become_user: "{{ bot_user }}"
   block:
     - name: make directory for deploy key
       file:
@@ -19,4 +19,4 @@
         mode: 0600
 
 - import_tasks: deploy.yml
-  become_user: "{{ deploy_user }}"
+  become_user: "{{ bot_user }}"

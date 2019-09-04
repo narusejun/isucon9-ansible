@@ -3,5 +3,5 @@ users:
   - zfhrp6
   - MonadicDavidHuang
 
-deploy_user: kiritan
+bot_user: kiritan
 slack_token: xoxb-732880978212-741563736497-3AAGcohYA8E7BJ6Af4vpF10Z

@@ -5,6 +5,6 @@ After=syslog.target network.target
 [Service]
 Type=simple
 Restart=always
-ExecStart=/home/{{ deploy_user }}/app/app
-EnvironmentFile=/home/{{ deploy_user }}/env
+ExecStart=/home/{{ bot_user }}/app/app
+EnvironmentFile=/home/{{ bot_user }}/env
 LimitNOFILE=65535
