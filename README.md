@@ -2,6 +2,26 @@
 
 チーム NaruseJun
 
+## reminder
+
+以下は最終計測前に必ず停止すること。
+上から重要。
+
+- hq.sysad.netのPortForwarding系
+	- 🚨🚨🚨🚨忘れると不正行為になる可能性アリ🚨🚨🚨🚨🚨
+	- SSHでつないでいるため
+- Deploy Bot
+	- 🚨🚨🚨🚨忘れると不正行為になる可能性アリ🚨🚨🚨🚨🚨
+	- SSHにつなぎにいくため
+- netdata
+	- `systemctl disable netdata && systemctl stop netdata`
+- slow_query_log
+	- /etc/mysql/mysql.conf.d/zz-isucon.cnf `slow_query_log = OFF`
+- nginx log
+	- /etc/nginx/nginx.conf `access_log off;`
+- pprof
+	- コードをいじってはがす
+
 ## memo
 
 ### ドメイン
@@ -46,12 +66,21 @@ http://pma.hq.sysad.net/
 
 slowlogは `mysql.slow_log` テーブルに格納されている。
 
+### myprofiler
+
+localのDBにつなぎに行くaliasが設定されているので、DBパスワードなどは気にしなくてOK。
+その他のパラメータ → https://github.com/KLab/myprofiler
+
+オススメ `myprofiler | notify_slack`
+
 ### systemctl/jounalctl
 
 一般ユーザでも勝手にsudoになるaliasが存在。
 `sc` → systemctl、`jc` → jounalctlのショートカットも。
 
 ### go
+
+`1.13` がインストールされている。
 
 - GOROOT `/opt/go`
 - PATH `/opt/go/bin`
@@ -78,8 +107,6 @@ slowlogは `mysql.slow_log` テーブルに格納されている。
 - http://isu1-netdata.hq.sysad.net/
 - http://isu2-netdata.hq.sysad.net/
 - http://isu3-netdata.hq.sysad.net/
-
-_最終計測前に必ず停止する_
 
 ### dstat
 
