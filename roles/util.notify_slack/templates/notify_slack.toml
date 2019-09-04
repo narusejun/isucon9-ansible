@@ -1,5 +1,5 @@
 [slack]
-url = "https://hooks.slack.com/services/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"
+url = "{{ slack_webhook_url }}"
 token = "{{ slack_token }}"
 channel = "#stdout"
 username = "{{ inventory_hostname_short }}"
