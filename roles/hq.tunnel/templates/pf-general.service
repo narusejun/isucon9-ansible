@@ -1,0 +1,10 @@
+[Unit]
+Description=general port forwarding
+After=syslog.target network.target
+
+[Service]
+Type=simple
+Restart=always
+ExecStart=/usr/bin/ssh -N -L {{ hostvars[item]["general_forward"] }}:0:8080 -o "StrictHostKeyChecking no" {{ item }}
+User={{ bot_user }}
+Group={{ bot_user }}

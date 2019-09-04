@@ -43,6 +43,29 @@
   loop: "{{ groups['all'] }}"
   when: "'netdata_forward' in hostvars[item]"
 
+- name: put portforward service for general
+  template:
+    src: pf-general.service
+    dest: /etc/systemd/system/pf-general-{{ item | regex_replace('\..+$') }}.service
+  loop: "{{ groups['all'] }}"
+  when: "'general_forward' in hostvars[item]"
+
+- name: put reverse proxy setting for general
+  template:
+    src: pf-general.conf
+    dest: /etc/nginx/sites-enabled/pf-general-{{ item | regex_replace('\..+$') }}.conf
+  loop: "{{ groups['all'] }}"
+  when: "'general_forward' in hostvars[item]"
+
+- name: enable portforward service for general
+  systemd:
+    name: pf-general-{{ item | regex_replace('\..+$') }}
+    enabled: yes
+    daemon_reload: yes
+    state: restarted
+  loop: "{{ groups['all'] }}"
+  when: "'general_forward' in hostvars[item]"
+
 - name: restart nginx
   systemd:
     name: nginx
