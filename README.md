@@ -2,6 +2,27 @@
 
 ## memo
 
+### Linux User
+
+githubアカウントと同名。githubに登録済みの鍵でログインできる。
+
+### MySQL User
+
+githubアカウントと同名。パスワードはアカウント名と同じ文字列。
+localhostからしか接続できない。SSHポートフォワードを使うか、SSHしてから`mysql`する。
+
+### deploy
+
+`/home/kiritan/Makefile` を使う。
+`sudo -i -u kiritan`して、`make`でビルド＋アプリ再起動する。
+
+↑これはslack botが叩いてくれる(_TODO_)ので、直接叩くのはトラブル時のみ。
+
+### systemctl/jounalctl
+
+一般ユーザでも勝手にsudoになるaliasが存在。
+`sc` → systemctl、`jc` → jounalctlのショートカットも。
+
 ### go
 
 - GOROOT `/opt/go`
@@ -21,9 +42,13 @@
 
 - `/opt/netdata`
 
-**最終計測前に停止すること**
-
 listening on `http://localhost:19999/`
+
+_最終計測前に必ず停止する_
+
+### dstat
+
+netdataがトラブったとき用に入れてある
 
 ### notify_slack
 
