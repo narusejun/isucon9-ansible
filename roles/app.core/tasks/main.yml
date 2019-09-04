@@ -31,7 +31,8 @@
     dest: /etc/systemd/system/isucon9-app.service
 
 - name: enable service
-  service:
+  systemd:
     name: isucon9-app
     enabled: yes
-    state: started
+    daemon_reload: yes
+    state: restarted
