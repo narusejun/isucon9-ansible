@@ -5,6 +5,7 @@
     dest: ~/app
     key_file: ~/.ssh/id_ed25519
     accept_hostkey: yes
+    force: yes
 
 - name: check envfile
   become_user: "{{ bot_user }}"

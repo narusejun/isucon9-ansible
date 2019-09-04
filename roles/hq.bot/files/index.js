@@ -2,7 +2,7 @@
 
 const express = require("express");
 const bodyParser = require("body-parser");
-const { exec } = require("child_process");
+const { spawn } = require("child_process");
 const { WebClient } = require("@slack/web-api");
 const { createEventAdapter } = require("@slack/events-api");
 const { createMessageAdapter } = require("@slack/interactive-messages");
@@ -76,7 +76,7 @@ slackEvents.on("app_mention", async event => {
 });
 
 slackInteractions.action({actionId: "deploy"}, async (payload, respond) => {
-	deploy("master");
+	deploy("origin/master");
 	await respond({
 		text: "Deployment process has been started.",
 		blocks: [payload.message.blocks[0], {
@@ -101,9 +101,12 @@ slackInteractions.action({actionId: "skip"}, async (payload, respond) => {
 	});
 });
 
-const deploy = ref => {
-	targets.forEach(target => exec(`ssh -f '${target}' 'make REF=\\'${ref}\\' | notify_slack'`));
-};
+const deploy = ref => Promise.all(targets.map(target => new Promise((resolve, reject) => {
+	// The code below is vulnerable to OS command injection. Use carefully.
+	const child = spawn("ssh", ["-f", target, `bash -c ". /etc/profile; make REF=${ref} 2>&1 | notify_slack"`]);
+	child.on("exit", resolve);
+	child.on("error", reject);
+})));
 
 const app = express();
 app.use("/gh", bodyParser.json());
