@@ -10,3 +10,6 @@
     - name: hq.bot
       tags:
         - hq.bot
+    - name: hq.tunnel
+      tags:
+        - hq.tunnel

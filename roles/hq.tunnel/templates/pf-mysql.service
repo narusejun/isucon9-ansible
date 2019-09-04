@@ -1,0 +1,10 @@
+[Unit]
+Description=mysql port forwarding
+After=syslog.target network.target
+
+[Service]
+Type=simple
+Restart=always
+ExecStart=/usr/bin/ssh -N -L {{ hostvars[item]["mysql_forward"] }}:0:3306 -o "StrictHostKeyChecking no" {{ item }}
+User={{ bot_user }}
+Group={{ bot_user }}

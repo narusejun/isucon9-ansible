@@ -4,17 +4,17 @@ localhost ansible_connection=local
 [hq]
 hq.sysad.net
 
-[app]
-isu1.sysad.net
-isu2.sysad.net
-isu3.sysad.net
-
 [lb]
 isu1.sysad.net
 isu2.sysad.net
 isu3.sysad.net
 
+[app]
+isu1.sysad.net netdata_forward=19001
+isu2.sysad.net netdata_forward=19002
+isu3.sysad.net netdata_forward=19003
+
 [db]
-isu1.sysad.net
-isu2.sysad.net
-isu3.sysad.net
+isu1.sysad.net mysql_forward=33001
+isu2.sysad.net mysql_forward=33002
+isu3.sysad.net mysql_forward=33003
