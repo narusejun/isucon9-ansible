@@ -1,6 +1,6 @@
 [slack]
-url = "https://hooks.slack.com/services/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"
-token = "xoxb-732880978212-732585035315-Ch5Tp482SyN83Ik3jWhQGTaC"
+url = "https://hooks.slack.com/services/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"
+token = "{{ slack_token }}"
 channel = "#stdout"
 username = "{{ inventory_hostname_short }}"
 icon_emoji = ":{{ inventory_hostname_short }}:"
