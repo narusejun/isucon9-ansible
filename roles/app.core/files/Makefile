@@ -1,12 +1,17 @@
+REF?=origin/master
+
+.ONESHELL:
+
 .PHONY: all
 all: build restart
 
 .PHONY: build
 build:
 	cd app
+	rm -rf *
 	git fetch
-	git reset --hard origin/master
-	go build -o app
+	git reset --hard $(REF)
+	make
 
 .PHONY: restart
 restart:
