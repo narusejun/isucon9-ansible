@@ -1,0 +1,21 @@
+- name: download myprofiler
+  get_url:
+    url: https://github.com/KLab/myprofiler/releases/download/0.2/myprofiler.linux_amd64.tar.gz
+    dest: /tmp/myprofiler.tar.gz
+
+- name: check myprofiler
+  stat:
+    path: /usr/local/bin/myprofiler
+  register: myprofiler
+
+- name: install myprofiler
+  unarchive:
+    remote_src: yes
+    src: /tmp/myprofiler.tar.gz
+    dest: /usr/local/bin
+  when: not myprofiler.stat.exists
+
+- name: put command
+  template:
+    src: 99-isucon-myprofiler.sh
+    dest: /etc/profile.d/99-isucon-myprofiler.sh

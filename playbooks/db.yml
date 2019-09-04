@@ -10,3 +10,6 @@
     - name: db.users
       tags:
         - db.users
+    - name: util.myprofiler
+      tags:
+        - util.myprofiler
