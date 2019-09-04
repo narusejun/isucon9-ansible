@@ -4,7 +4,7 @@
 
 - name: download go
   get_url:
-    url: https://dl.google.com/go/go1.12.9.linux-amd64.tar.gz
+    url: https://dl.google.com/go/go1.13.linux-amd64.tar.gz
     dest: /tmp/go.tar.gz
 
 - name: install go
