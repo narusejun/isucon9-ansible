@@ -2,6 +2,7 @@
   apt:
     name: "{{ item }}"
   loop:
+    - nginx
     - nodejs
     - npm
 
@@ -40,6 +41,18 @@
 - name: enable service
   systemd:
     name: bot
+    enabled: yes
+    daemon_reload: yes
+    state: restarted
+
+- name: put reverse proxy setting
+  template:
+    src: nginx.conf
+    dest: /etc/nginx/sites-enabled/bot.conf
+
+- name: restart nginx
+  systemd:
+    name: nginx
     enabled: yes
     daemon_reload: yes
     state: restarted

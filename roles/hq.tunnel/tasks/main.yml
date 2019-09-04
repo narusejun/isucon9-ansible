@@ -1,5 +1,8 @@
-- set_fact:
-    target
+- name: install dependent package
+  apt:
+    name: "{{ item }}"
+  loop:
+    - nginx
 
 - name: put portforward service for mysql
   template:
@@ -24,6 +27,13 @@
   loop: "{{ groups['all'] }}"
   when: "'netdata_forward' in hostvars[item]"
 
+- name: put reverse proxy setting for netdata
+  template:
+    src: pf-netdata.conf
+    dest: /etc/nginx/sites-enabled/pf-netdata-{{ item | regex_replace('\..+$') }}.conf
+  loop: "{{ groups['all'] }}"
+  when: "'netdata_forward' in hostvars[item]"
+
 - name: enable portforward service for netdata
   systemd:
     name: pf-netdata-{{ item | regex_replace('\..+$') }}
@@ -32,3 +42,10 @@
     state: restarted
   loop: "{{ groups['all'] }}"
   when: "'netdata_forward' in hostvars[item]"
+
+- name: restart nginx
+  systemd:
+    name: nginx
+    enabled: yes
+    daemon_reload: yes
+    state: restarted
