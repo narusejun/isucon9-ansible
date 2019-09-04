@@ -1,0 +1,12 @@
+- hosts: hq
+  become: yes
+  roles:
+    - name: common.users
+      tags:
+        - common.users
+    - name: common.bot_user
+      tags:
+        - common.bot_user
+    - name: hq.bot
+      tags:
+        - hq.bot

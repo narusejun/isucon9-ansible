@@ -1,6 +1,9 @@
 [local]
 localhost ansible_connection=local
 
+[hq]
+hq.sysad.net
+
 [app]
 isu1.sysad.net
 isu2.sysad.net

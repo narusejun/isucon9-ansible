@@ -1,0 +1,10 @@
+[Unit]
+Description=isucon bot
+After=syslog.target network.target
+
+[Service]
+Type=simple
+Restart=always
+ExecStart=/usr/bin/env node /home/{{ bot_user }}/bot
+User={{ bot_user }}
+Group={{ bot_user }}

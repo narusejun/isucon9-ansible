@@ -1,0 +1,42 @@
+- name: install dependent package
+  apt:
+    name: nodejs
+
+- name: create directory for bot
+  become_user: "{{ bot_user }}"
+  file:
+    path: ~/bot
+    state: directory
+
+- name: put script
+  become_user: "{{ bot_user }}"
+  copy:
+    src: "{{ item }}"
+    dest: ~/bot/{{ item }}
+  loop:
+    - index.js
+    - package.json
+
+- name: put credentials
+  become_user: "{{ bot_user }}"
+  template:
+    src: credential.json
+    dest: ~/bot/credential.json
+
+- name: resolve dependencies
+  become_user: "{{ bot_user }}"
+  command: npm i
+  args:
+    chdir: ~/bot
+
+- name: put service definition
+  template:
+    src: bot.service
+    dest: /etc/systemd/system/bot.service
+
+- name: enable service
+  systemd:
+    name: bot
+    enabled: yes
+    daemon_reload: yes
+    state: restarted
