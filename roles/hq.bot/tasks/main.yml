@@ -1,6 +1,9 @@
 - name: install dependent package
   apt:
-    name: nodejs
+    name: "{{ item }}"
+  loop:
+    - nodejs
+    - npm
 
 - name: create directory for bot
   become_user: "{{ bot_user }}"
