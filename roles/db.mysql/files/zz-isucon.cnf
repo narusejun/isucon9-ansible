@@ -1,14 +1,14 @@
 [mysqld]
 
 # 最大接続数
-max_connections = 8192
+max_connections = 16384
 
-# 後で消す
+# 最終計測時はOFFにすること
 slow_query_log = ON
-long_query_time = 2
-slow_query_log_file = /var/log/mysql/slow.log
+long_query_time = 1
+log_output = TABLE
 
-# クエリキャッシュ
+# クエリキャッシュ（ONにするかは要検討）
 query_cache_type = OFF
 query_cache_size = 512MB
 
