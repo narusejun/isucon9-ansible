@@ -1,0 +1,49 @@
+- set_fact:
+    pma_version: 4.9.0.1
+
+- name: install dependent package
+  apt:
+    name: "{{ item }}"
+  loop:
+    - nginx
+    - hhvm
+
+- name: download phpMyAdmin
+  get_url:
+    url: https://files.phpmyadmin.net/phpMyAdmin/{{ pma_version }}/phpMyAdmin-{{ pma_version }}-all-languages.tar.xz
+    dest: /tmp/phpMyAdmin-{{ pma_version }}-all-languages.tar.xz
+
+- name: install phpMyAdmin
+  unarchive:
+    remote_src: yes
+    src: /tmp/phpMyAdmin-{{ pma_version }}-all-languages.tar.xz
+    dest: /opt
+
+- name: put config file
+  template:
+    src: config.inc.php
+    dest: /opt/phpMyAdmin-{{ pma_version }}-all-languages/config.inc.php
+
+- name: put service definition
+  template:
+    src: phpmyadmin.service
+    dest: /etc/systemd/system/phpmyadmin.service
+
+- name: enable service
+  systemd:
+    name: phpmyadmin
+    enabled: yes
+    daemon_reload: yes
+    state: restarted
+
+- name: put reverse proxy setting
+  template:
+    src: nginx.conf
+    dest: /etc/nginx/sites-enabled/phpmyadmin.conf
+
+- name: restart nginx
+  systemd:
+    name: nginx
+    enabled: yes
+    daemon_reload: yes
+    state: restarted

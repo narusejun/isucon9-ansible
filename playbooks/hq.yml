@@ -13,3 +13,6 @@
     - name: hq.tunnel
       tags:
         - hq.tunnel
+    - name: hq.phpmyadmin
+      tags:
+        - hq.phpmyadmin
