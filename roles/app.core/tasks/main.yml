@@ -1,22 +1,37 @@
-- name: add deploy user
-  user:
-    name: "{{ bot_user }}"
-    append: yes
-    groups: wheel
-    shell: /bin/bash
-
-- become_user: "{{ bot_user }}"
-  block:
-    - name: make directory for deploy key
-      file:
-        path: ~/.ssh
-        state: directory
-        mode: 0700
-    - name: add deploy key
-      copy:
-        src: deploy_key.pem
-        dest: ~/.ssh/id_rsa
-        mode: 0600
-
-- import_tasks: deploy.yml
+- name: clone repository
   become_user: "{{ bot_user }}"
+  git:
+    repo: git@github.com:kaz/isucon9-app.git
+    dest: ~/app
+    key_file: ~/.ssh/id_ed25519
+    accept_hostkey: yes
+
+- name: check envfile
+  become_user: "{{ bot_user }}"
+  stat:
+    path: ~/env
+  register: env
+
+- name: touch envfile
+  become_user: "{{ bot_user }}"
+  file:
+    path: ~/env
+    state: touch
+  when: not env.stat.exists
+
+- name: put deploy script
+  become_user: "{{ bot_user }}"
+  copy:
+    src: Makefile
+    dest: ~/Makefile
+
+- name: put service definition
+  template:
+    src: isucon9-app.service
+    dest: /etc/systemd/system/isucon9-app.service
+
+- name: enable service
+  service:
+    name: isucon9-app
+    enabled: yes
+    state: started

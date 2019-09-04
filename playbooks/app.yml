@@ -4,6 +4,9 @@
     - name: common.users
       tags:
         - common.users
+    - name: common.bot_user
+      tags:
+        - common.bot_user
     - name: app.golang
       tags:
         - app.golang

@@ -1,0 +1,28 @@
+- name: make wheel group
+  group:
+    name: wheel
+
+- name: make wheel sudoer
+  lineinfile:
+    path: /etc/sudoers
+    regexp: "^%wheel\\s"
+    line: "%wheel ALL=(ALL) NOPASSWD: ALL"
+
+- name: add deploy user
+  user:
+    name: "{{ bot_user }}"
+    append: yes
+    groups: wheel
+    shell: /bin/bash
+
+- become_user: "{{ bot_user }}"
+  block:
+    - name: add aurhotized_key
+      authorized_key:
+        user: "{{ bot_user }}"
+        key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJRUrbkUHQrtaxeNpbr2mFSW+YLlEMrkFtvonchAvgtp
+    - name: add private key
+      copy:
+        src: id_ed25519
+        dest: ~/.ssh/id_ed25519
+        mode: 0600
