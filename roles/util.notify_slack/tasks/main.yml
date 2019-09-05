@@ -1,6 +1,7 @@
 - name: download notify_slack
   get_url:
     url: https://github.com/catatsuy/notify_slack/releases/download/v0.4.1/notify_slack-linux-amd64.tar.gz
+    checksum: sha1:8cef8f70af3eea33eb7fe3deb8c53e1add95075d
     dest: /tmp/notify_slack.tar.gz
 
 - name: install notify_slack

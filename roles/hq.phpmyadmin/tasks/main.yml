@@ -11,13 +11,21 @@
 - name: download phpMyAdmin
   get_url:
     url: https://files.phpmyadmin.net/phpMyAdmin/{{ pma_version }}/phpMyAdmin-{{ pma_version }}-all-languages.tar.xz
+    checksum: sha1:97c5ec2ecf53fda5e1b217ee64c3f5fde6bed032
     dest: /tmp/phpMyAdmin-{{ pma_version }}-all-languages.tar.xz
+  register: pma
 
-- name: install phpMyAdmin
-  unarchive:
-    remote_src: yes
-    src: /tmp/phpMyAdmin-{{ pma_version }}-all-languages.tar.xz
-    dest: /opt
+- block:
+    - name: uninstall old phpMyAdmin
+      file:
+        path: /opt/phpMyAdmin-{{ pma_version }}-all-languages
+        state: absent
+    - name: install phpMyAdmin
+      unarchive:
+        remote_src: yes
+        src: /tmp/phpMyAdmin-{{ pma_version }}-all-languages.tar.xz
+        dest: /opt
+  when: pma.changed
 
 - name: put config file
   template:

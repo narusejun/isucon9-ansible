@@ -2,16 +2,24 @@
   apt:
     name: graphviz
 
-- name: download go
+- name: download golang
   get_url:
     url: https://dl.google.com/go/go1.13.linux-amd64.tar.gz
+    checksum: sha1:e6db5c41c6d086335919ab6018b11cc1106e8c28
     dest: /tmp/go.tar.gz
+  register: golang
 
-- name: install go
-  unarchive:
-    remote_src: yes
-    src: /tmp/go.tar.gz
-    dest: /opt
+- block:
+    - name: uninstall old golang
+      file:
+        path: /opt/go
+        state: absent
+    - name: install golang
+      unarchive:
+        remote_src: yes
+        src: /tmp/go.tar.gz
+        dest: /opt
+  when: golang.changed
 
 - name: set path
   copy:
