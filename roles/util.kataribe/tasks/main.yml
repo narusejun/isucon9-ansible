@@ -4,12 +4,9 @@
 
 - name: download kataribe
   get_url:
-    url: https://github.com/matsuu/kataribe/releases/download/v0.3.3/linux_amd64.zip
+    url: https://github.com/matsuu/kataribe/releases/download/v0.4.1/kataribe-v0.4.1_linux_amd64.zip
+    checksum: sha1:34da63eb1696b964d30d9fac3b6c2778b9797eb4
     dest: /tmp/kataribe.zip
-
-- name: check kataribe
-  stat:
-    path: /usr/local/bin/kataribe
   register: kataribe
 
 - block:
@@ -26,7 +23,7 @@
         - LICENSE
         - README.md
         - kataribe.toml
-  when: not kataribe.stat.exists
+  when: kataribe.changed
 
 - name: put configuration
   copy:
