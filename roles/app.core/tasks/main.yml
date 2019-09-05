@@ -23,17 +23,21 @@
 - name: put deploy script
   become_user: "{{ bot_user }}"
   copy:
-    src: Makefile
-    dest: ~/Makefile
+    src: "{{ item }}"
+    dest: ~/{{ item }}
+    mode: 0755
+  loop:
+    - deploy.sh
+    - deploy_notify.sh
 
 - name: put service definition
   template:
-    src: isucon9-app.service
-    dest: /etc/systemd/system/isucon9-app.service
+    src: app.service
+    dest: /etc/systemd/system/app.service
 
 - name: enable service
   systemd:
-    name: isucon9-app
+    name: app
     enabled: yes
     daemon_reload: yes
     state: restarted

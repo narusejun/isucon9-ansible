@@ -1,0 +1,14 @@
+[Unit]
+Description=isucon application
+After=syslog.target network.target
+
+[Service]
+Type=simple
+LimitNOFILE=65535
+
+Restart=always
+RestartSec=3
+
+EnvironmentFile=/home/{{ bot_user }}/env
+WorkingDirectory=/home/{{ bot_user }}/app
+ExecStart=/home/{{ bot_user }}/app/app

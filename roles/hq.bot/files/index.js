@@ -7,7 +7,8 @@ const { WebClient } = require("@slack/web-api");
 const { createEventAdapter } = require("@slack/events-api");
 const { createMessageAdapter } = require("@slack/interactive-messages");
 
-let targets = ["isu1.sysad.net", "isu2.sysad.net", "isu3.sysad.net"];
+const domain = "sysad.net";
+let targets = [1, 2, 3].map(i => `isu${i}.${domain}`);
 
 const { slackToken, slackSigningSecret } = require("./credential.json");
 
@@ -68,7 +69,7 @@ slackEvents.on("app_mention", async event => {
 		deploy(arg);
 		text = "Deployment process has been started. For details, see <#CM7SYH011>";
 	}else if(op === "target"){
-		targets = arg.split(",");
+		targets = arg.split(",").map(i => `isu${i}.${domain}`);
 		text = `Targets changed. \`${JSON.stringify(targets)}\``;
 	}
 
@@ -103,7 +104,7 @@ slackInteractions.action({actionId: "skip"}, async (payload, respond) => {
 
 const deploy = ref => Promise.all(targets.map(target => new Promise((resolve, reject) => {
 	// The code below is vulnerable to OS command injection. Use carefully.
-	const child = spawn("ssh", ["-f", target, `bash -c ". /etc/profile; make REF=${ref} 2>&1 | notify_slack"`]);
+	const child = spawn("ssh", ["-f", target, "./deploy_notify.sh", ref]);
 	child.on("exit", resolve);
 	child.on("error", reject);
 })));

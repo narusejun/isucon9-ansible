@@ -39,12 +39,19 @@ IP直打ちでの(SSH|HTTP)アクセスではどれが何台目か混乱しが�
 
 githubアカウントと同名。githubに登録済みの鍵でSSHログインできる。
 
+### アプリ
+
+https://github.com/kaz/isucon9-app
+
+リポジトリのトップに実行ファイル`app`を生成するMakefileを置くこと。後述のデプロイスクリプトはこれをキックする。
+systemdで起動される。サービス名は`app.service`である。必ず`9000/tcp`でLISTENすること。
+
 ### deploy
 
-`/home/kiritan/Makefile` を使う。
-`sudo -i -u kiritan`して、`make`でビルド＋アプリ再起動する。
+`/home/kiritan/deploy.sh` を使う。
+`sudo -i -u kiritan`して、`./deploy.sh`でビルド＋アプリ再起動する。
 
-↑これは下記のbot↓が叩いてくれるので、直接叩くのはトラブル時のみ。
+※ これは下記のbotが叩いてくれるので、直接叩くのはトラブル時のみ。
 
 ### deploy bot
 
@@ -52,6 +59,8 @@ Slackの`#deploy`にいる。
 
 isucon9-appリポジトリのmasterが更新されると、「デプロイしますか？」的な質問を飛ばす → そこからデプロイできる。
 `@kiritan deploy [commit_id]` とか `@kiritan deploy origin/branch-name` とかで任意のタイミングでのdeployも可。
+
+`@kiritan target 1,3` とするとデプロイ先を変更することができる。（この場合isu1とisu3にデプロイする。）
 
 ### MySQL User
 
