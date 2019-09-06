@@ -2,6 +2,12 @@
 
 チーム NaruseJun
 
+## 開発機にインストールしておくべきリスト
+
+- go (1.13)
+- ansible (2.7.12)
+	- 多分2.8でも大丈夫だと思う！
+
 ## 最初にやることリスト
 
 - レギュレーションと当日マニュアルを読み込む
@@ -26,6 +32,8 @@
 	  Host hq
 	  	HostName hq.sysad.net
 	  ```
+- Pythonをリモートに入れる（一応）
+	- Pythonが入ってないとansibleが動かない。python実装が存在するので、入っているはずだけど。
 - ログインユーザを作る
 	- `ansible-playbook playbooks/all.yml -t common.users`
 	- その後のAnsibleも`-t`付きで実行することを推奨。環境がぶっ壊れたときのリカバリを早めるため。
