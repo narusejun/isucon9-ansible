@@ -1,0 +1,4 @@
+- name: put hosts file
+  template:
+    src: hosts
+    dest: /etc/hosts

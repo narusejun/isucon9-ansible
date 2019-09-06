@@ -1,0 +1,7 @@
+127.0.0.1 localhost
+
+{% for host in groups["all"] %}
+{% if "ansible_all_ipv4_addresses" in hostvars[host] %}
+{{ hostvars[host]["ansible_all_ipv4_addresses"][0] }} {{ host }}
+{% endif %}
+{% endfor %}

@@ -4,6 +4,9 @@
     - name: common.users
       tags:
         - common.users
+    - name: common.hosts
+      tags:
+        - common.hosts
     - name: lb.nginx
       tags:
         - lb.nginx

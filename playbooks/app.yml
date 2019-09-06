@@ -7,6 +7,9 @@
     - name: common.bot_user
       tags:
         - common.bot_user
+    - name: common.hosts
+      tags:
+        - common.hosts
     - name: app.golang
       tags:
         - app.golang
