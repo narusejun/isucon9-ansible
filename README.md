@@ -2,27 +2,48 @@
 
 チーム NaruseJun
 
-## reminder
+## 最初にやることリスト
 
-以下は最終計測前に必ず停止すること。
-上から重要。
+- レギュレーションと当日マニュアルを読み込む
+	- 得点計算周りをよく理解する。例年と大きく異なる場合は、施策のヒントになっているかも。
+	- 外部連携APIの仕様も重要。何ができるかをよく把握しておく。
+	- インスタンスのサイズ（メモリ、CPU）等も確認して共有。
+- DNSの設定
+	- _環境に関するメモ → ドメイン_ を参照
+- ログインユーザを作る
+	- `ansible-playbook playbooks/all.yml -t common.users`
+	- その後のAnsibleも`-t`付きで実行することを推奨。環境がぶっ壊れたときのリカバリを早めるため。
+		- 最初は`-l`もつけるべきかもしれない。
+- ソースコードと静的ファイル類をlocalへ持っていき、appリポジトリに上げる
+	- `tar zcvf ~/code.tar.gz /home/isucon/(ほげ)`
+	- `rsync isu1:code.tar.gz .` or `scp isu1:code.tar.gz .`
+	- ソースコードと、静的ファイル類。例年はisuconユーザのホームディレクトリにおいてあった。
+- DBをダンプしてlocalに持ってきておく
+	- `mysqldump -u (だれか) -p (DB名) > dump.sql`
+	- 最初から初期データのダンプがおいてある場合もある。要確認。
 
-- hq.sysad.netのPortForwarding系
-	- 🚨🚨🚨🚨忘れると不正行為になる可能性アリ🚨🚨🚨🚨🚨
+## 最終計測前チェックリスト
+
+上から順に重要。
+
+- hq.sysad.netのPortForwarding系を止める
+	- 🚨🚨🚨忘れると不正行為になる可能性アリ🚨🚨🚨
 	- SSHでつないでいるため
-- Deploy Bot
-	- 🚨🚨🚨🚨忘れると不正行為になる可能性アリ🚨🚨🚨🚨🚨
+- Deploy Botを止める
+	- 🚨🚨🚨忘れると不正行為になる可能性アリ🚨🚨🚨
 	- SSHにつなぎにいくため
-- netdata
+- 再起動後、アプリが完動しているかを調べる
+	- 再起動時に `/etc/hosts` が書き換わる場合があるので、要チェック
+- netdataを止める
 	- `systemctl disable netdata && systemctl stop netdata`
-- slow_query_log
+- slow_query_logを止める
 	- /etc/mysql/mysql.conf.d/zz-isucon.cnf `slow_query_log = OFF`
-- nginx log
+- nginx logを止める
 	- /etc/nginx/nginx.conf `access_log off;`
-- pprof
+- pprofを止める
 	- コードをいじってはがす
 
-## memo
+## 環境に関するメモ
 
 ### ドメイン
 
@@ -34,6 +55,7 @@ IP直打ちでの(SSH|HTTP)アクセスではどれが何台目か混乱しが�
 - isu3.sysad.net
 
 これらは、開始直後に手動で設定する。
+各インスタンスの `/etc/hosts` は、内部接続を利用するように設定されているので、このドメインを使って内部の通信も行って良い。
 
 ### Linux User
 
@@ -111,7 +133,7 @@ localのDBにつなぎに行くaliasが設定されているので、DBパスワ
 - `/opt/netdata`
 
 各ホストの 19999/tcp でLISTENしている。
-以下のURLでもアクセスできる。
+以下のURLでもアクセスできる。（推奨）
 
 - http://isu1-netdata.hq.sysad.net/
 - http://isu2-netdata.hq.sysad.net/
