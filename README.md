@@ -10,16 +10,33 @@
 	- インスタンスのサイズ（メモリ、CPU）等も確認して共有。
 - DNSの設定
 	- _環境に関するメモ → ドメイン_ を参照
+- `~/ssh/config` の用意（推奨）
+	- ```
+	  Host *
+	  	User (githubのユーザ名)
+	  	TCPKeepAlive yes
+	  	ForwardAgent yes
+	  	ServerAliveInterval 60
+	  Host isu1
+	  	HostName isu1.sysad.net
+	  Host isu2
+	  	HostName isu2.sysad.net
+	  Host isu3
+	  	HostName isu3.sysad.net
+	  Host hq
+	  	HostName hq.sysad.net
+	  ```
 - ログインユーザを作る
 	- `ansible-playbook playbooks/all.yml -t common.users`
 	- その後のAnsibleも`-t`付きで実行することを推奨。環境がぶっ壊れたときのリカバリを早めるため。
 		- 最初は`-l`もつけるべきかもしれない。
 - ソースコードと静的ファイル類をlocalへ持っていき、appリポジトリに上げる
 	- `tar zcvf ~/code.tar.gz /home/isucon/(ほげ)`
-	- `rsync isu1:code.tar.gz .` or `scp isu1:code.tar.gz .`
+	- `post_slack code.tar.gz` (推奨)
+		- fallback: `rsync isu1:code.tar.gz .` or `scp isu1:code.tar.gz .`
 	- ソースコードと、静的ファイル類。例年はisuconユーザのホームディレクトリにおいてあった。
 - DBをダンプしてlocalに持ってきておく
-	- `mysqldump -u (だれか) -p (DB名) > dump.sql`
+	- `mysqldump -u (だれか) -p (DB名) > dump.sql` && `gzip dump.sql`
 	- 最初から初期データのダンプがおいてある場合もある。要確認。
 
 ## 最終計測前チェックリスト
@@ -91,13 +108,16 @@ localhostからしか接続できない。SSHポートフォワードを使う�
 
 ### phpMyAdmin
 
+DBのオペレーションをするやつ。一応負荷状況も見れる。
+slowlogはテーブルに書くようになっているので、phpMyAdminで`mysql.slow_log`を確認すれば良い。
+
 ↓競技用インスタンス3台に接続しているphpMyAdmin
 
 http://pma.hq.sysad.net/
 
-slowlogは `mysql.slow_log` テーブルに格納されている。
-
 ### myprofiler
+
+DBに飛んできてるクエリを集計するやつ。
 
 localのDBにつなぎに行くaliasが設定されているので、DBパスワードなどは気にしなくてOK。
 その他のパラメータ → https://github.com/KLab/myprofiler
@@ -106,8 +126,21 @@ localのDBにつなぎに行くaliasが設定されているので、DBパスワ
 
 ### systemctl/jounalctl
 
-一般ユーザでも勝手にsudoになるaliasが存在。
-`sc` → systemctl、`jc` → jounalctlのショートカットも。
+一般ユーザでも勝手にsudoになるaliasが入れてあるので、一般ユーザでもふつうに叩ける。
+ほか、以下のようなショートカットもあり。
+
+| ショートカット | 展開後 | 備考 |
+| --- | --- | --- |
+| `sc` | `systemctl` | |
+| `sce` | `systemctl status` | Examineのイメージ |
+| `scs` | `systemctl start` | Start |
+| `sck` | `systemctl stop` | Killのイメージ |
+| `scr` | `systemctl restart` | Restart |
+| `scl` | `systemctl reload` | reLoadのイメージ |
+| `jc` | `jounalctl` | |
+| `jcf` | `jounalctl -f -u` | `jcf nginx` とかいう感じで使う |
+| `jcn` | `jounalctl -n 100 -u` | |
+| `jcnn` | `jounalctl -n 1000 -u` | nが長いイメージ |
 
 ### go
 
@@ -118,7 +151,8 @@ localのDBにつなぎに行くaliasが設定されているので、DBパスワ
 
 ### kataribe
 
-- binary `/usr/local/bin/kataribe`
+nginxのログファイルを集計して表示するやつ。
+
 - config `/etc/kataribe.toml`
 
 | コマンド | 結果 |
@@ -130,7 +164,7 @@ localのDBにつなぎに行くaliasが設定されているので、DBパスワ
 
 ### netdata
 
-- `/opt/netdata`
+ホストの負荷状況を確認するやつ（GUI）
 
 各ホストの 19999/tcp でLISTENしている。
 以下のURLでもアクセスできる。（推奨）
@@ -141,17 +175,30 @@ localのDBにつなぎに行くaliasが設定されているので、DBパスワ
 
 ### dstat
 
-netdataがトラブったとき用に入れてある
+ホストの負荷状況を確認するやつ（CUI）
+netdataがトラブったとき用に入れてある。
 
 ### notify_slack
 
-- binary `/usr/local/bin/notify_slack`
+テキストをslackに投げるやつ。
+`#stdout`に上がる。
+
 - config `/etc/notify_slack.toml`
 
 Example
 ```
 uname -a | notify_slack
 cat /proc/cpuinfo | notify_slack -snippet
+```
+
+### upload_slack
+
+ファイルをslackにアップロードするやつ。
+`#stdout`に上がる。
+
+Example
+```
+upload_slack ./some_file
 ```
 
 ### HTTPフォワード
