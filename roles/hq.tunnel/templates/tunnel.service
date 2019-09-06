@@ -1,0 +1,11 @@
+[Unit]
+Description=ssh tunneling service
+After=syslog.target network.target
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=3
+ExecStart=/usr/bin/ssh -N -o "StrictHostKeyChecking no" {% if "general_forward" in hostvars[item] %} -L {{ hostvars[item]["general_forward"] }}:0:8080 {% endif %} {% if "netdata_forward" in hostvars[item] %} -L {{ hostvars[item]["netdata_forward"] }}:0:19999 {% endif %} {% if "mysql_forward" in hostvars[item] %} -L {{ hostvars[item]["mysql_forward"] }}:0:3306 {% endif %} {{ item }}
+User={{ bot_user }}
+Group={{ bot_user }}
