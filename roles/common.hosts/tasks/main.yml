@@ -1,3 +1,15 @@
+- name: check hosts file
+  stat:
+    path: /etc/hosts.orig
+  register: hosts
+
+- name: backup hosts file
+  copy:
+    remote_src: yes
+    src: /etc/hosts
+    dest: /etc/hosts.orig
+  when: not hosts.stat.exists
+
 - name: put hosts file
   template:
     src: hosts
