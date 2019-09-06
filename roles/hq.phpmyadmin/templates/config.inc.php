@@ -1,4 +1,3 @@
-
 {% for item in groups['all'] %}
 {% if 'mysql_forward' in hostvars[item] %}
 <?php

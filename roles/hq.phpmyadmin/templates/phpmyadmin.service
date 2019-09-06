@@ -1,8 +1,0 @@
-[Unit]
-Description=phpMyAdmin
-After=syslog.target network.target
-
-[Service]
-Type=simple
-Restart=always
-ExecStart=/usr/bin/hhvm -m server -p 6000 -v Server.AllowRunAsRoot=1 -d hhvm.server.type=proxygen -d hhvm.server.source_root=/opt/phpMyAdmin-{{ pma_version }}-all-languages
