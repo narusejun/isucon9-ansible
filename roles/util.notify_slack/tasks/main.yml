@@ -14,3 +14,9 @@
   template:
     src: notify_slack.toml
     dest: /etc/notify_slack.toml
+
+- name: put command
+  template:
+    src: upload_slack.sh
+    dest: /usr/local/bin/upload_slack
+    mode: 0755
