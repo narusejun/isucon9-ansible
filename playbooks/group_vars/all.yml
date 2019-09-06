@@ -7,3 +7,5 @@ bot_user: kiritan
 slack_token: xoxb-732880978212-741563736497-3AAGcohYA8E7BJ6Af4vpF10Z
 slack_signing_secret: 6decefc49afa4d20a4c363fe1d31da1c
 slack_webhook_url: https://hooks.slack.com/services/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
+slack_channel_stdout: CM7SYH011
+slack_channel_deploy: CMNEKS1HR

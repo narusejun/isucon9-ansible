@@ -1,7 +1,7 @@
 [slack]
 url = "{{ slack_webhook_url }}"
 token = "{{ slack_token }}"
-channel = "#stdout"
+channel = "{{ slack_channel_stdout }}"
 username = "{{ inventory_hostname_short }}"
 icon_emoji = ":{{ inventory_hostname_short }}:"
 interval = "1s"

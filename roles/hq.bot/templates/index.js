@@ -24,14 +24,14 @@ const githubEventHandler = async (req, res) => {
 	}
 
 	await web.chat.postMessage({
-		channel: "CMNEKS1HR",
+		channel: "{{ slack_channel_deploy }}",
 		text: `${name} pushed new commits to master.`,
 		blocks: [
 			{
 				type: "section",
 				text: {
 					type: "mrkdwn",
-					text: `${name} pushed new commits to master. <${compare}|View changes>\nWould you like to deploy them?`,
+					text: `**${name}** pushed new commits to **origin/master**. <${compare}|View changes>\nWould you like to deploy them?`,
 				},
 			},
 			{
@@ -67,10 +67,10 @@ slackEvents.on("app_mention", async event => {
 		text = "pong";
 	}else if(op == "deploy"){
 		deploy(arg);
-		text = "Deployment process has been started. For details, see <#CM7SYH011>";
+		text = "Deployment process has been started. For details, see <#{{ slack_channel_stdout }}>";
 	}else if(op === "target"){
 		targets = arg.split(",").map(i => `isu${i}.${domain}`);
-		text = `Targets changed. \`${JSON.stringify(targets)}\``;
+		text = `OK. New targets are \`${JSON.stringify(targets)}\`.`;
 	}
 
 	await web.chat.postMessage({text, channel: event.channel});
@@ -84,7 +84,7 @@ slackInteractions.action({actionId: "deploy"}, async (payload, respond) => {
 			type: "context",
 			elements: [{
 				type: "mrkdwn",
-				text: "🚀 Started. For details, see <#CM7SYH011>",
+				text: "🚀 Started. For details, see <#{{ slack_channel_stdout }}>",
 			}],
 		}],
 	});

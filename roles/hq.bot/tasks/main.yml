@@ -12,9 +12,9 @@
     path: ~/bot
     state: directory
 
-- name: put script
+- name: put scripts
   become_user: "{{ bot_user }}"
-  copy:
+  template:
     src: "{{ item }}"
     dest: ~/bot/{{ item }}
   loop:
