@@ -7,7 +7,7 @@ const { WebClient } = require("@slack/web-api");
 const { createEventAdapter } = require("@slack/events-api");
 const { createMessageAdapter } = require("@slack/interactive-messages");
 
-const domain = "sysad.net";
+const domain = "{{ inventory_hostname | regex_replace('^[^.]+\\.') }}";
 let targets = [1, 2, 3].map(i => `isu${i}.${domain}`);
 
 const { slackToken, slackSigningSecret } = require("./credential.json");
