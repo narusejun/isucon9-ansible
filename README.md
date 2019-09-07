@@ -25,6 +25,8 @@
 	  	TCPKeepAlive yes
 	  	ForwardAgent yes
 	  	ServerAliveInterval 60
+	  	StrictHostKeyChecking no
+	  	UserKnownHostsFile /dev/null
 	  Host isu1
 	  	HostName isu1.sysad.net
 	  Host isu2
