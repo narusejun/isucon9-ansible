@@ -28,4 +28,4 @@
     dest: /etc/profile.d/99-isucon-{{ item }}.sh
   loop:
     - path
-    - systemctl
+    - shortcut
