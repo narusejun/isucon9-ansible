@@ -55,6 +55,7 @@
 - DBをダンプしてlocalに持ってきておく
 	- `mysqldump -u (だれか) -p (DB名) > dump.sql` && `gzip dump.sql`
 	- 最初から初期データのダンプがおいてある場合もある。要確認。
+- 初期実装を止める
 
 ## 最終計測前チェックリスト
 
@@ -143,7 +144,7 @@ localのDBにつなぎに行くaliasが設定されているので、DBパスワ
 
 オススメ `myprofiler | notify_slack`
 
-### systemctl/jounalctl
+### ショートカット集
 
 一般ユーザでも勝手にsudoになるaliasが入れてあるので、一般ユーザでもふつうに叩ける。
 ほか、以下のようなショートカットもあり。
@@ -156,10 +157,14 @@ localのDBにつなぎに行くaliasが設定されているので、DBパスワ
 | `sck` | `systemctl stop` | Killのイメージ |
 | `scr` | `systemctl restart` | Restart |
 | `scl` | `systemctl reload` | reLoadのイメージ |
+| `scon` | `systemctl enable` | ON |
+| `scof` | `systemctl disable` | OFf |
 | `jc` | `jounalctl` | |
 | `jcf` | `jounalctl -f -u` | `jcf nginx` とかいう感じで使う |
 | `jcn` | `jounalctl -n 100 -u` | |
 | `jcnn` | `jounalctl -n 1000 -u` | nが長いイメージ |
+| `ppf` | `go tool pprof -http :8080` | |
+| `pph` | `go tool pprof -http :8080 http://localhost:6060/debug/pprof/profile` | |
 
 ### go
 
