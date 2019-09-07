@@ -92,7 +92,7 @@ githubアカウントと同名。githubに登録済みの鍵でSSHログイン�
 
 https://github.com/kaz/isucon9-app
 
-リポジトリのトップに実行ファイル`app`を生成するMakefileを置くこと。後述のデプロイスクリプトはこれをキックする。
+リポジトリのトップに実行ファイル`app`を生成するMakefileをリポジトリトップに置くこと。後述のデプロイスクリプトはこれをキックする。
 systemdで起動される。サービス名は`app.service`である。必ず`9000/tcp`でLISTENすること。
 
 ### deploy
