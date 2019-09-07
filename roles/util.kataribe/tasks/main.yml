@@ -1,5 +1,5 @@
 - name: install unzip
-  apt:
+  yum:
     name: unzip
 
 - name: download kataribe

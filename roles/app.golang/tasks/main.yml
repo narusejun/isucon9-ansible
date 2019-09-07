@@ -1,5 +1,5 @@
 - name: install graphviz for pprof
-  apt:
+  yum:
     name: graphviz
 
 - name: download golang

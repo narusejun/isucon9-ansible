@@ -1,5 +1,5 @@
 - name: install dstat (alternative of netdata!)
-  apt:
+  yum:
     name: dstat
 
 - name: download install script for netdata

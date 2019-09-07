@@ -1,5 +1,5 @@
 - name: install nginx
-  apt:
+  yum:
     name: nginx
 
 - name: check nginx conf
