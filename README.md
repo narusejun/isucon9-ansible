@@ -115,9 +115,10 @@ systemdで起動される。サービス名は`app.service`である。必ず`90
 Slackの`#deploy`にいる。
 
 isucon9-appリポジトリのmasterが更新されると、「デプロイしますか？」的な質問を飛ばす → そこからデプロイできる。
-`@kiritan deploy [commit_id]` とか `@kiritan deploy origin/branch-name` とかで任意のタイミングでのdeployも可。
+`@kiritan deploy [commit-id or branch-name] [targets]` で任意のタイミングでのdeployも可。
 
-`@kiritan target 1,3` とするとデプロイ先を変更することができる。（この場合isu1とisu3にデプロイする。）
+`[commit-id or branch-name]`を省略すると、origin/masterがデプロイされる。
+`[targets]`は数字をコンマ区切りで指定する。`1,3`とするとisu1とisu3にデプロイされる感じ。省略すると全台。
 
 ### MySQL User
 

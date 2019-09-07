@@ -8,7 +8,6 @@ const { createEventAdapter } = require("@slack/events-api");
 const { createMessageAdapter } = require("@slack/interactive-messages");
 
 const domain = "{{ inventory_hostname | regex_replace('^[^.]+\\.') }}";
-let targets = [1, 2, 3].map(i => `isu${i}.${domain}`);
 
 const { slackToken, slackSigningSecret } = require("./credential.json");
 
@@ -60,24 +59,21 @@ const githubEventHandler = async (req, res) => {
 };
 
 slackEvents.on("app_mention", async event => {
-	let text = "say \"<@kiritan> deploy [commit-id]\"";
+	let text = "say `@kiritan deploy [commit-id or branch-name] [targets]`";
 
-	const [, op, arg] = event.text.split(" ");
+	const [, op, arg1, arg2] = event.text.split(" ");
 	if(op === "ping"){
 		text = "pong";
-	}else if(op == "deploy"){
-		deploy(arg);
+	}else if(op === "deploy"){
+		deploy(arg1 || "origin/master", (arg2 || "1,2,3").split(","));
 		text = "Deployment process has been started. For details, see <#{{ slack_channel_stdout }}>";
-	}else if(op === "target"){
-		targets = arg.split(",").map(i => `isu${i}.${domain}`);
-		text = `OK. New targets are \`${JSON.stringify(targets)}\`.`;
 	}
 
 	await web.chat.postMessage({text, channel: event.channel});
 });
 
 slackInteractions.action({actionId: "deploy"}, async (payload, respond) => {
-	deploy("origin/master");
+	deploy("origin/master", [1, 2, 3]);
 	await respond({
 		text: "Deployment process has been started.",
 		blocks: [payload.message.blocks[0], {
@@ -96,15 +92,15 @@ slackInteractions.action({actionId: "skip"}, async (payload, respond) => {
 			type: "context",
 			elements: [{
 				type: "mrkdwn",
-				text: "🆗 Skipped. When you want to deploy some commit, say \"<@kiritan> deploy [commit-id]\"",
+				text: "🆗 Skipped. When you want to deploy some commit, say `@kiritan deploy [commit-id or branch-name] [targets]`",
 			}],
 		}],
 	});
 });
 
-const deploy = ref => Promise.all(targets.map(target => new Promise((resolve, reject) => {
+const deploy = (ref, targets) => Promise.all(targets.map(i => new Promise((resolve, reject) => {
 	// The code below is vulnerable to OS command injection. Use carefully.
-	const child = spawn("ssh", ["-f", target, "./deploy_notify.sh", ref]);
+	const child = spawn("ssh", ["-f", `isu${i}.${domain}`, "./deploy_notify.sh", ref]);
 	child.on("exit", resolve);
 	child.on("error", reject);
 })));
