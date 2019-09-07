@@ -7,6 +7,8 @@
 - go (1.13)
 - ansible (2.7.12)
 	- 多分2.8でも大丈夫だと思う！
+- sshpass
+	- `brew install http://git.io/sshpass.rb`
 
 ## 最初にやることリスト
 
@@ -32,10 +34,10 @@
 	  Host hq
 	  	HostName hq.sysad.net
 	  ```
-- Pythonをリモートに入れる（一応）
+- ~~Pythonをリモートに入れる~~（やらなくて良い）
 	- Pythonが入ってないとansibleが動かない。python実装が存在するので、入っているはずだけど。
 - ログインユーザを作る
-	- `ansible-playbook playbooks/all.yml -t common.users`
+	- `ansible-playbook playbooks/all.yml -t common.users-e ansible_ssh_user="isucon" -e ansible_ssh_pass="isucon"`
 	- その後のAnsibleも`-t`付きで実行することを推奨。環境がぶっ壊れたときのリカバリを早めるため。
 		- 最初は`-l`もつけるべきかもしれない。
 - ソースコードと静的ファイル類をlocalへ持っていき、appリポジトリに上げる
