@@ -1,5 +1,5 @@
 - name: create mysql user
   shell: |
-    mysql -e 'CREATE USER {{ item }}@localhost IDENTIFIED BY "{{ item }}"'
-    mysql -e 'GRANT ALL ON *.* TO {{ item }}@localhost'
+    mysql -e 'CREATE USER `{{ item[0:16] }}`@localhost IDENTIFIED BY "{{ item[0:16] }}"'
+    mysql -e 'GRANT ALL ON *.* TO `{{ item[0:16] }}`@localhost'
   loop: "{{ users + [bot_user] }}"
