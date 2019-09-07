@@ -22,7 +22,10 @@
     key: https://github.com/{{ item }}.keys
   loop: "{{ users }}"
 
-- name: put commands
+- name: put shell profiles
   copy:
-    src: 99-isucon-systemctl.sh
-    dest: /etc/profile.d/99-isucon-systemctl.sh
+    src: 99-isucon-{{ item }}.sh
+    dest: /etc/profile.d/99-isucon-{{ item }}.sh
+  loop:
+    - path
+    - systemctl
