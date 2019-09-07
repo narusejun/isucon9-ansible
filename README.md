@@ -96,6 +96,7 @@ https://github.com/kaz/isucon9-app
 
 リポジトリのトップに実行ファイル`app`を生成するMakefileをリポジトリトップに置くこと。後述のデプロイスクリプトはこれをキックする。
 systemdで起動される。サービス名は`app.service`である。必ず`9000/tcp`でLISTENすること。
+環境変数を `/home/kiritan/env` から読み込むので、ココに書いておくと良い。
 
 ### deploy
 
