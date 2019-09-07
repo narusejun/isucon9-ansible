@@ -44,7 +44,7 @@
 		- 最初は`-l`もつけるべきかもしれない。
 - ソースコードと静的ファイル類をlocalへ持っていき、appリポジトリに上げる
 	- `tar zcvf ~/code.tar.gz /home/isucon/(ほげ)`
-	- `post_slack code.tar.gz` (推奨)
+	- `upload_slack code.tar.gz` (推奨)
 		- fallback: `rsync isu1:code.tar.gz .` or `scp isu1:code.tar.gz .`
 	- ソースコードと、静的ファイル類。例年はisuconユーザのホームディレクトリにおいてあった。
 - DBをダンプしてlocalに持ってきておく
