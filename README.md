@@ -47,6 +47,11 @@
 	- `upload_slack code.tar.gz` (推奨)
 		- fallback: `rsync isu1:code.tar.gz .` or `scp isu1:code.tar.gz .`
 	- ソースコードと、静的ファイル類。例年はisuconユーザのホームディレクトリにおいてあった。
+- appリポジトリをいい感じにする
+	- go.modの生成
+	- 静的ファイルへの参照リンクを変更
+	- 相対パスでスクリプトたたいてるやつがあったら修正
+	- `9000/tcp`でLISTENするように変更
 - DBをダンプしてlocalに持ってきておく
 	- `mysqldump -u (だれか) -p (DB名) > dump.sql` && `gzip dump.sql`
 	- 最初から初期データのダンプがおいてある場合もある。要確認。
