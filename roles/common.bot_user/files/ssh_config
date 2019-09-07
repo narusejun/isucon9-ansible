@@ -1,0 +1,5 @@
+TCPKeepAlive yes
+ForwardAgent yes
+ServerAliveInterval 60
+StrictHostKeyChecking no
+UserKnownHostsFile /dev/null

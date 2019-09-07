@@ -31,7 +31,7 @@ const githubEventHandler = async (req, res) => {
 				type: "section",
 				text: {
 					type: "mrkdwn",
-					text: `**${name}** pushed new commits to **origin/master**. <${compare}|View changes>\nWould you like to deploy them?`,
+					text: `*${name}* pushed new commits to *origin/master*. <${compare}|View changes>\nWould you like to deploy them?`,
 				},
 			},
 			{
