@@ -7,18 +7,11 @@
     accept_hostkey: yes
     force: yes
 
-- name: check envfile
+- name: put envfile
   become_user: "{{ bot_user }}"
-  stat:
-    path: ~/env
-  register: env
-
-- name: touch envfile
-  become_user: "{{ bot_user }}"
-  file:
-    path: ~/env
-    state: touch
-  when: not env.stat.exists
+  template:
+    src: env.sh
+    dest: ~/env
 
 - name: put deploy script
   become_user: "{{ bot_user }}"
