@@ -1,5 +1,8 @@
 [mysqld]
 
+# 外部から接続可
+bind-address = 0.0.0.0
+
 # 最大接続数
 max_connections = 16384
 
