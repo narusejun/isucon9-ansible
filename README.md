@@ -51,7 +51,7 @@
 	- go.modの生成
 	- 静的ファイルへの参照リンクを変更
 	- 相対パスでスクリプトたたいてるやつがあったら修正
-	- `9000/tcp`でLISTENするように変更
+	- `8000/tcp`でLISTENするように変更
 - DBをダンプしてlocalに持ってきておく
 	- `mysqldump -u (だれか) -p (DB名) > dump.sql` && `gzip dump.sql`
 	- 最初から初期データのダンプがおいてある場合もある。要確認。
@@ -100,7 +100,7 @@ githubアカウントと同名。githubに登録済みの鍵でSSHログイン�
 https://github.com/kaz/isucon9-app
 
 リポジトリのトップに実行ファイル`app`を生成するMakefileをリポジトリトップに置くこと。後述のデプロイスクリプトはこれをキックする。
-systemdで起動される。サービス名は`app.service`である。必ず`9000/tcp`でLISTENすること。
+systemdで起動される。サービス名は`app.service`である。必ず`8000/tcp`でLISTENすること。
 環境変数を `/home/kiritan/env` から読み込むので、ココに書いておくと良い。
 
 ### deploy
