@@ -164,7 +164,7 @@ localのDBにつなぎに行くaliasが設定されているので、DBパスワ
 | `jcn` | `jounalctl -n 100 -u` | |
 | `jcnn` | `jounalctl -n 1000 -u` | nが長いイメージ |
 | `ppf` | `go tool pprof -http :8080` | |
-| `pph` | `go tool pprof -http :8080 http://localhost:6060/debug/pprof/profile` | |
+| `pph` | `go tool pprof -http :8080 http://localhost/debug/pprof/profile` | |
 
 ### go
 
