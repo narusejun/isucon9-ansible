@@ -16,4 +16,4 @@ alias jcn="sudo journalctl -n 100 -u"
 alias jcnn="sudo journalctl -n 1000 -u"
 
 alias ppf="sudo /opt/go/bin/go tool pprof -http :8080"
-alias pph="sudo /opt/go/bin/go tool pprof -http :8080 http://localhost/debug/pprof/profile"
+alias pph="sudo /opt/go/bin/go tool pprof -http :8080 http://localhost:8000/debug/pprof/profile"
