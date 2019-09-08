@@ -12,3 +12,6 @@ RestartSec=3
 EnvironmentFile=/home/{{ bot_user }}/env
 WorkingDirectory=/home/{{ bot_user }}/app
 ExecStart=/home/{{ bot_user }}/app/app
+
+[Install]
+WantedBy=multi-user.target
