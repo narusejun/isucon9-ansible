@@ -7,7 +7,7 @@ bind-address = 0.0.0.0
 max_connections = 16384
 
 # 最終計測時はOFFにすること
-slow_query_log = ON
+slow_query_log = OFF
 long_query_time = 1
 log_output = TABLE
 
